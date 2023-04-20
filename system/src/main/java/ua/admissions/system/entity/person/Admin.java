@@ -1,14 +1,34 @@
 package ua.admissions.system.entity.person;
 
-import ua.admissions.system.entity.constant.Role;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "admin")
+@DiscriminatorValue("ADMIN")
 public class Admin extends User {
-    private final Role role = Role.ADMIN;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Admin admin = (Admin) o;
+        return id != null && Objects.equals(id, admin.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
