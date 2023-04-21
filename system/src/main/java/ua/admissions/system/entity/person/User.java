@@ -4,6 +4,7 @@ import lombok.*;
 import ua.admissions.system.entity.AbstractBaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -13,9 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
+
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "users_type", discriminatorType = DiscriminatorType.STRING)
 public class User extends AbstractBaseEntity {
     @NotBlank
     @Column(name = "first_name")
@@ -26,6 +28,7 @@ public class User extends AbstractBaseEntity {
     @Column
     protected LocalDate birthday;
     @NotBlank
+    @Email
     @Column(unique = true)
     protected String email;
     @NotBlank

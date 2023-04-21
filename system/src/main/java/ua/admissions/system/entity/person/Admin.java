@@ -18,6 +18,12 @@ import java.util.Objects;
 @Table(name = "admin")
 @DiscriminatorValue("ADMIN")
 public class Admin extends User {
+
+    public Admin(Admin admin) {
+        super(admin.getFirstName(), admin.getLastName(), admin.getBirthday(), admin.getEmail(),
+                admin.getPassword());
+    }
+
     public Admin(@NotBlank String firstName, @NotBlank String lastName, LocalDate birthday,
                  @NotBlank String email, @NotBlank String password) {
         super(firstName, lastName, birthday, email, password);
