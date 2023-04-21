@@ -1,14 +1,13 @@
 package ua.admissions.system.entity.person;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -19,6 +18,11 @@ import java.util.Objects;
 @Table(name = "admin")
 @DiscriminatorValue("ADMIN")
 public class Admin extends User {
+    public Admin(@NotBlank String firstName, @NotBlank String lastName, LocalDate birthday,
+                 @NotBlank String email, @NotBlank String password) {
+        super(firstName, lastName, birthday, email, password);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

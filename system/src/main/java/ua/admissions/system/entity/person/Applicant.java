@@ -6,6 +6,8 @@ import ua.admissions.system.entity.Faculty;
 import ua.admissions.system.util.ExamScoreListValidation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -18,7 +20,9 @@ import java.util.List;
 @DiscriminatorValue("APPLICANT")
 public class Applicant extends User {
     @ExamScoreListValidation
+/*
     @Enumerated(EnumType.STRING)
+*/
     @OneToMany
     @ToString.Exclude
     private List<ExamScore> scores;
@@ -28,6 +32,14 @@ public class Applicant extends User {
     private Faculty faculty;
     @Column
     private boolean enabled;
+
+    public Applicant(@NotBlank String firstName, @NotBlank String lastName, LocalDate birthday, @NotBlank String email,
+                     @NotBlank String password, List<ExamScore> scores, Faculty faculty, boolean enabled) {
+        super(firstName, lastName, birthday, email, password);
+        this.scores = scores;
+        this.faculty = faculty;
+        this.enabled = enabled;
+    }
 
     @Override
     public boolean equals(Object o) {
