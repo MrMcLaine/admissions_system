@@ -52,6 +52,10 @@ class ApplicantRepositoryTest {
 
     @Test
     void findByEmail() {
+        Applicant applicant = repository.save(CREATED_APPLICANT);
+        String applicantEmail = applicant.getEmail();
+        Applicant foundApplicant = repository.findByEmail(applicantEmail);
+        checkApplicantFields(foundApplicant, CREATED_APPLICANT);
     }
 
     @Test
@@ -69,7 +73,7 @@ class ApplicantRepositoryTest {
         repository.save(CREATED_APPLICANT_3);
 
         List<Applicant> applicants = repository.findAll();
-        checkAdminLists(applicants, APPLICANT_LIST);
+        checkApplicantLists(applicants, APPLICANT_LIST);
     }
 
     @Test
@@ -96,7 +100,7 @@ class ApplicantRepositoryTest {
         Assertions.assertFalse(a2.isEnabled());
     }
 
-    void checkAdminLists(List<Applicant> al1, List<Applicant> al2) {
+    void checkApplicantLists(List<Applicant> al1, List<Applicant> al2) {
         Assertions.assertEquals(al1.size(), al2.size());
         for (int i = 0; i < al1.size(); i++) {
             checkApplicantFields(al1.get(i), al2.get(i));

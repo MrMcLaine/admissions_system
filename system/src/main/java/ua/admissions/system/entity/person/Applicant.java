@@ -19,15 +19,6 @@ import java.util.List;
 @Table(name = "applicant")
 @DiscriminatorValue("APPLICANT")
 public class Applicant extends User {
-
-    public Applicant(Applicant applicant) {
-        super(applicant.getFirstName(), applicant.getLastName(), applicant.getBirthday(), applicant.getEmail(),
-                applicant.getPassword());
-        this.scores = applicant.getScores();
-        this.faculty = applicant.getFaculty();
-        this.enabled = applicant.isEnabled();
-    }
-
     @ExamScoreListValidation
 /*
     @Enumerated(EnumType.STRING)
@@ -41,6 +32,14 @@ public class Applicant extends User {
     private Faculty faculty;
     @Column
     private boolean enabled;
+
+    public Applicant(Applicant applicant) {
+        super(applicant.getFirstName(), applicant.getLastName(), applicant.getBirthday(), applicant.getEmail(),
+                applicant.getPassword());
+        this.scores = applicant.getScores();
+        this.faculty = applicant.getFaculty();
+        this.enabled = applicant.isEnabled();
+    }
 
     public Applicant(@NotBlank String firstName, @NotBlank String lastName, LocalDate birthday, @NotBlank String email,
                      @NotBlank String password, List<ExamScore> scores, Faculty faculty, boolean enabled) {

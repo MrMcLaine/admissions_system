@@ -16,11 +16,21 @@ import java.util.Objects;
 @Table(name = "application_for_admission")
 public class ApplicationForAdmission extends AbstractBaseEntity{
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applicant_id", nullable = false)
+    @JoinColumn(name = "applicant_id", nullable = false, unique = true)
     @ToString.Exclude
     private Applicant applicant;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "faculty_id", nullable = false)
+    @ToString.Exclude
+    private Faculty faculty;
     @Column
     private Boolean isProcessed;
+
+    public ApplicationForAdmission(ApplicationForAdmission application) {
+        this.applicant = application.getApplicant();
+        this.faculty = application.getFaculty();
+        this.isProcessed = application.getIsProcessed();
+    }
 
     @Override
     public boolean equals(Object o) {
