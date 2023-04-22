@@ -19,6 +19,15 @@ import java.util.List;
 @Table(name = "applicant")
 @DiscriminatorValue("APPLICANT")
 public class Applicant extends User {
+
+    public Applicant(Applicant applicant) {
+        super(applicant.getFirstName(), applicant.getLastName(), applicant.getBirthday(), applicant.getEmail(),
+                applicant.getPassword());
+        this.scores = applicant.getScores();
+        this.faculty = applicant.getFaculty();
+        this.enabled = applicant.isEnabled();
+    }
+
     @ExamScoreListValidation
 /*
     @Enumerated(EnumType.STRING)

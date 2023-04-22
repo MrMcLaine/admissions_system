@@ -41,16 +41,16 @@ class AdminRepositoryTest {
     @Test
     void deleteById() {
         Admin admin = repository.save(CREATED_ADMIN);
-        Long admin_id = admin.getId();
-        repository.deleteById(admin_id);
-        assertFalse(repository.existsById(admin_id));
+        Long adminId = admin.getId();
+        repository.deleteById(adminId);
+        assertFalse(repository.existsById(adminId));
     }
 
     @Test
     void findById() {
         Admin admin = repository.save(CREATED_ADMIN);
-        Long admin_id = admin.getId();
-        Admin foundAdmin = repository.getReferenceById(admin_id);
+        Long adminId = admin.getId();
+        Admin foundAdmin = repository.getReferenceById(adminId);
         checkAdminFields(foundAdmin, CREATED_ADMIN);
     }
 
