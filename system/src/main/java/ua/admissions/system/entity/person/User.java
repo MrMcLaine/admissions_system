@@ -35,6 +35,17 @@ public class User extends AbstractBaseEntity {
     @Column
     protected String password;
     protected String passwordConfirm;
+    @Column(name = "users_type", insertable = false, updatable = false)
+    private String userType;
+
+    public User(User user) {
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.birthday = user.birthday;
+        this.email = user.email;
+        this.password = user.password;
+        this.passwordConfirm = user.passwordConfirm;
+    }
 
     @Override
     public boolean equals(Object o) {
