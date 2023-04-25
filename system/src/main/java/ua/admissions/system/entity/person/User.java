@@ -34,6 +34,7 @@ public class User extends AbstractBaseEntity {
     @NotBlank
     @Column
     protected String password;
+    protected String passwordConfirm;
 
     @Override
     public boolean equals(Object o) {
