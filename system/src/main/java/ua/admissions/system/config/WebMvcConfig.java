@@ -5,6 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.core.convert.converter.Converter;
+import ua.admissions.system.util.LocalDateConverter;
+
+import java.time.LocalDate;
+
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
@@ -21,5 +26,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         resolver.setPrefix("/jsp/");
         resolver.setSuffix(".jsp");
         return resolver;
+    }
+
+    @Bean
+    public Converter<String, LocalDate> localDateConverter() {
+        return new LocalDateConverter();
     }
 }

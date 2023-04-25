@@ -3,7 +3,6 @@ package ua.admissions.system.entity.person;
 import lombok.*;
 import ua.admissions.system.entity.ExamScore;
 import ua.admissions.system.entity.Faculty;
-import ua.admissions.system.util.ExamScoreListValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,17 +18,14 @@ import java.util.List;
 @Table(name = "applicant")
 @DiscriminatorValue("APPLICANT")
 public class Applicant extends User {
-    @ExamScoreListValidation
-/*
-    @Enumerated(EnumType.STRING)
-*/
+    /*@ExamScoreListValidation*/
     @OneToMany
     @ToString.Exclude
     private List<ExamScore> scores;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "faculty_id", nullable = false)
+    @JoinColumn(name = "faculty_id", nullable = true)
     @ToString.Exclude
-    private Faculty faculty;
+    private Faculty faculty = null;
     @Column
     private boolean enabled;
 

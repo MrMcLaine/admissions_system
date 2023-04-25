@@ -5,8 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ua.admissions.system.entity.person.Applicant;
 import ua.admissions.system.entity.person.User;
-import ua.admissions.system.repository.UserRepository;
+import ua.admissions.system.repository.ApplicantRepository;
 
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private ApplicantRepository repository;
 
     public CustomUserDetailsService() {
     }
@@ -22,14 +23,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        Optional<Applicant> userOptional = repository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return new CustomUserDetails(user, user.getUserType());
         }
 
-        throw new UsernameNotFoundException("No user present with userEmail:" + email);
+        throw new UsernameNotFoundException("No user present with useremail:" + email);
     }
 
 }

@@ -1,5 +1,7 @@
 package ua.admissions.system.security;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +9,8 @@ import ua.admissions.system.entity.person.User;
 
 import java.io.Serial;
 import java.util.Collection;
+@Getter
+@Setter
 public class CustomUserDetails extends User implements UserDetails {
 
     @Serial

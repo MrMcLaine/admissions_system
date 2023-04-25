@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
 public class WebSecurityConfig {
 
@@ -51,12 +53,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/home").access("hasUserType('APPLICANT') or hasUserType('ADMIN')")
-                .antMatchers("/cabinet").access("hasUserType('APPLICANT')")
-                .antMatchers("/faculty").access("hasUserType('APPLICANT') or hasUserType('ADMIN')")
-                .antMatchers("/check-application").access("hasUserType('ADMIN')")
+                .antMatchers("/home").access("hasAuthority('APPLICANT') or hasAuthority('ADMIN')")
+                .antMatchers("/cabinet").access("hasAuthority('APPLICANT')")
+                .antMatchers("/faculty").access("hasAuthority('APPLICANT') or hasAuthority('ADMIN')")
+                .antMatchers("/check-application").access("hasAuthority('ADMIN')")
                 .anyRequest().permitAll().and()
-
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home").usernameParameter("email").passwordParameter("password").and()
                 .logout().logoutSuccessUrl("/login?logout").and()

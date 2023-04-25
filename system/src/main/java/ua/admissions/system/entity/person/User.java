@@ -1,6 +1,7 @@
 package ua.admissions.system.entity.person;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.admissions.system.entity.AbstractBaseEntity;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class User extends AbstractBaseEntity {
     @Column(name = "last_name")
     protected String lastName;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     protected LocalDate birthday;
     @NotBlank
     @Email
@@ -45,6 +47,23 @@ public class User extends AbstractBaseEntity {
         this.email = user.email;
         this.password = user.password;
         this.passwordConfirm = user.passwordConfirm;
+    }
+
+    public User(String firstName, String lastName, LocalDate birthday, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String firstName, String lastName, LocalDate birthday, String email, String password, String passwordConfirm) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
