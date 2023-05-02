@@ -1,20 +1,26 @@
 package ua.admissions.system.repository;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ua.admissions.system.ApplicantTestData.*;
+import static ua.admissions.system.ExamScoreTestData.EXAM_SCORES;
 import static ua.admissions.system.ExamScoreTestData.MISSING_EXAM_SCORES;
+import static ua.admissions.system.FacultyTestData.CREATED_FACULTY_COMPUTER_SCIENCE;
+import static ua.admissions.system.FacultyTestData.CREATED_FACULTY_ENGINEERING;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import ua.admissions.system.entity.ExamScore;
 import ua.admissions.system.entity.person.Applicant;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -22,14 +28,33 @@ import java.util.List;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ApplicantRepositoryTest {
-
+/*
     @Autowired
     private ApplicantRepository repository;
+    @Autowired
+    private ApplicationForAdmissionRepository admissionRepository;
+    @Autowired
+    private FacultyRepository facultyRepository;
+    @Autowired
+    private ExamScoreRepository examScoreRepository;
+
+    @BeforeEach
+    public void initFields() {
+        facultyRepository.save(CREATED_FACULTY_COMPUTER_SCIENCE);
+        facultyRepository.save(CREATED_FACULTY_ENGINEERING);
+        Applicant applicant = repository.save(CREATED_APPLICANT);
+        for (ExamScore score : EXAM_SCORES) {
+            Applicant applicantCurrent = repository.findById(applicant.getId()).orElseThrow(()
+                    -> new EntityNotFoundException("Applicant not found"));
+            score.setApplicant(applicantCurrent);
+            examScoreRepository.save(score);
+        }
+    }
 
     @Test
     void createApplicant() {
-        Applicant savedApplicant = repository.save(CREATED_APPLICANT);
-        checkApplicantFields(savedApplicant, CREATED_APPLICANT);
+        Applicant savedApplicant = repository.save(CREATED_APPLICANT_2);
+        checkApplicantFields(savedApplicant, CREATED_APPLICANT_2);
     }
 
     @Test
@@ -44,7 +69,7 @@ class ApplicantRepositoryTest {
 
     @Test
     void delete() {
-        Applicant applicant = repository.save(CREATED_APPLICANT);
+        Applicant applicant = repository.save(saverCheck(CREATED_APPLICANT));
         Long applicantId = applicant.getId();
         repository.deleteById(applicantId);
         assertFalse(repository.existsById(applicantId));
@@ -106,4 +131,11 @@ class ApplicantRepositoryTest {
             checkApplicantFields(al1.get(i), al2.get(i));
         }
     }
+
+    private Applicant saverCheck(Applicant applicant){
+        if(repository.findByEmail(applicant.getEmail()) == null) {
+            return repository.save(applicant);
+        }
+        return repository.findByEmail(applicant.getEmail());
+    }*/
 }

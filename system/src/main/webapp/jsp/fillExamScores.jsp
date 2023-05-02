@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
@@ -60,12 +60,56 @@
             </div>
         </div>
 
-        <c:forEach items="${examScores}" var="subject">
-            <p>
-                <label for="${subject}">${subject} Score:</label>
-                <form:input id="${subject}" path="scores[${subject.index}].score" type="number" step="0.01"/>
-            </p>
-        </c:forEach>
+<%--
+        <form:form method="POST" action="${contextPath}/submitExamScores" modelAttribute="examScores">
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Score</th>
+                </tr>
+                <c:forEach var="examScore" items="${examScores}">
+                    <tr>
+                        <td>${examScore.name}</td>
+                        <td><form:input path="${examScore.score}" type="number" max="100" min="0"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <button type="submit">Submit</button>
+        </form:form>
+--%>
+
+<%--        <form:form method="POST" action="${contextPath}/submitExamScores" modelAttribute="applicantDto">
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Score</th>
+                </tr>
+                <c:forEach var="examScore" items="${applicantDto.scores}">
+                    <tr>
+                        <td>${examScore.name}</td>
+                        <td><form:input path="${examScore.score}" type="number" max="100" min="0"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <button type="submit">Submit</button>
+        </form:form>--%>
+
+        <form:form method="POST" action="${contextPath}/submitExamScores" modelAttribute="applicantDto">
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Score</th>
+                </tr>
+                <c:forEach var="examScore" items="${applicantDto.scores}" varStatus="loop">
+                    <tr>
+                        <td>${examScore.name}</td>
+                        <td><form:hidden path="scores[${loop.index}].name" value="${examScore.name}" /></td>
+                        <td><form:input path="scores[${loop.index}].score" type="number" max="100" min="0"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <button type="submit">Submit</button>
+        </form:form>
 
     </div>
 

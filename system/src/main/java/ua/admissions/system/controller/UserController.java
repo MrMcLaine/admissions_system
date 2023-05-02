@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.admissions.system.dto.ApplicantDto;
+import ua.admissions.system.entity.ExamScore;
 import ua.admissions.system.entity.constant.SubjectName;
 import ua.admissions.system.entity.person.Applicant;
 import ua.admissions.system.entity.person.User;
@@ -17,6 +19,7 @@ import ua.admissions.system.service.ApplicantService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -54,20 +57,27 @@ public class UserController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String welcome(Model model) {
+    public String welcome() {
         return "home";
     }
 
     @RequestMapping(value = "/examScores", method = RequestMethod.GET)
-    public ModelAndView createPeriodical(Model model) {
-        List<SubjectName> examScores = Arrays.stream(SubjectName.values()).toList();
+    public ModelAndView examScores(Model model) {
+
+        List<ExamScore> examScores = Arrays.asList(SubjectName.values())
+                .stream()
+                .map(ExamScore::new)
+                .collect(Collectors.toList());
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
 
-        model.addAttribute("applicant", applicant);
-        model.addAttribute("examScores", examScores);
+        /*applicant.setScores(examScores);*/
+        ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), examScores);
 
-        return new ModelAndView("fillExamScores", model.asMap());
+        model.addAttribute("applicantDto", applicantDto);
+        /*model.addAttribute("examScores", examScores);*/
+
+        return new ModelAndView("fillExamScores", "model", model);
     }
 }

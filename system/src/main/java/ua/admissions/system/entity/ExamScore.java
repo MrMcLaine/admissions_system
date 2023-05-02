@@ -26,6 +26,20 @@ public class ExamScore extends AbstractBaseEntity {
     @ToString.Exclude
     private Applicant applicant;
 
+    public ExamScore(SubjectName name) {
+        this.name = name;
+    }
+
+    public ExamScore(SubjectName name, Double score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public SubjectName getName() {
+        return name;
+    }
+    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
