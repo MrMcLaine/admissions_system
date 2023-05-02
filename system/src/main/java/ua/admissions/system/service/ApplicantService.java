@@ -18,4 +18,8 @@ public class ApplicantService {
         applicant.setPassword(bCryptPasswordEncoder.encode(applicant.getPasswordConfirm()));
         repository.save(applicant);
     }
+
+    public Applicant findByEmail(String email) {
+        return repository.findByEmail(email).orElse(null);
+    }
 }

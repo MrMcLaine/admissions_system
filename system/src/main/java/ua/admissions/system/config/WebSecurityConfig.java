@@ -24,6 +24,7 @@ import java.util.Collections;
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
 public class WebSecurityConfig {
 
+
     @Autowired
     private UserDetailsService userDetailsService;
 

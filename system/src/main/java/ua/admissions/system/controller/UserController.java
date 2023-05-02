@@ -1,15 +1,22 @@
 package ua.admissions.system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import ua.admissions.system.entity.constant.SubjectName;
 import ua.admissions.system.entity.person.Applicant;
 import ua.admissions.system.entity.person.User;
 import ua.admissions.system.service.ApplicantService;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -49,5 +56,18 @@ public class UserController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String welcome(Model model) {
         return "home";
+    }
+
+    @RequestMapping(value = "/examScores", method = RequestMethod.GET)
+    public ModelAndView createPeriodical(Model model) {
+        List<SubjectName> examScores = Arrays.stream(SubjectName.values()).toList();
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
+
+        model.addAttribute("applicant", applicant);
+        model.addAttribute("examScores", examScores);
+
+        return new ModelAndView("fillExamScores", model.asMap());
     }
 }
