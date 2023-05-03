@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ua.admissions.system.util.ApplicantUtil.getApplicantDtos;
+
 @Controller
 public class UserController {
     @Autowired
@@ -72,12 +74,24 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
 
-        /*applicant.setScores(examScores);*/
         ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), examScores);
 
         model.addAttribute("applicantDto", applicantDto);
-        /*model.addAttribute("examScores", examScores);*/
 
         return new ModelAndView("fillExamScores", "model", model);
     }
+
+    @RequestMapping(value = "/applicantsByFaculty", method = RequestMethod.GET)
+    public ModelAndView applicantsByFaculty(Model model) {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
+
+        List<ApplicantDto> applicantDtos = getApplicantDtos(applicantService.findAllByFaculty(applicant.getFaculty()));
+
+        model.addAttribute("applicantDtos", applicantDtos);
+
+        return new ModelAndView("applicantsOnFaculty", "model", model);
+    }
+
 }

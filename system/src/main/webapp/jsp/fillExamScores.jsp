@@ -28,6 +28,7 @@
         <a href="/home" class="w3-bar-item w3-button">Home</a>
         <a href="/examScores" class="w3-bar-item w3-button">Fill in exam scores</a>
         <a href="/apply-admission" class="w3-bar-item w3-button">Apply for admission to the faculty</a>
+        <a href="/applicantsByFaculty" class="w3-bar-item w3-button">View all applicants by selected faculty</a>
 
     </div>
 

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.admissions.system.dto.ApplicationDto;
 import ua.admissions.system.entity.ApplicationForAdmission;
 import ua.admissions.system.entity.ExamScore;
+import ua.admissions.system.entity.Faculty;
 import ua.admissions.system.entity.constant.FacultyName;
 import ua.admissions.system.entity.person.Applicant;
 import ua.admissions.system.service.ApplicantService;
@@ -70,10 +71,15 @@ public class FacultyController {
 
         ApplicationForAdmission application = new ApplicationForAdmission();
         application.setApplicant(applicant);
-        application.setFaculty(facultyService.findByNameForApplication(applicationDto.getFacultyName()));
+        Faculty faculty = facultyService.findByNameForApplication(applicationDto.getFacultyName());
+        application.setFaculty(faculty);
 
         // save the ApplicationForAdmission objects to the database
         applicationForAdmissionService.save(application);
+
+        // update applicant (add Faculty field)
+        applicant.setFaculty(faculty);
+        applicantService.save(applicant);
 
         modelMap.addAttribute("successMessage", "Exam scores saved successfully");
         return new ModelAndView("redirect:/home");

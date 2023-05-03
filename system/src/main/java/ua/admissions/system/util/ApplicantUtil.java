@@ -1,7 +1,9 @@
 package ua.admissions.system.util;
 
+import ua.admissions.system.dto.ApplicantDto;
 import ua.admissions.system.entity.ExamScore;
 import ua.admissions.system.entity.constant.SubjectName;
+import ua.admissions.system.entity.person.Applicant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,5 +21,14 @@ public class ApplicantUtil {
         }
 
         return !subjectNames.contains(subjectNamesByApplicant);
+    }
+
+    public static List<ApplicantDto> getApplicantDtos(List<Applicant> applicants) {
+        List<ApplicantDto> applicantDtos = new ArrayList<>();
+        for (Applicant a : applicants) {
+            applicantDtos.add(new ApplicantDto(a.getFirstName(), a.getLastName(), a.getFaculty().getName(),
+                    a.isEnabled()));
+        }
+        return applicantDtos;
     }
 }
