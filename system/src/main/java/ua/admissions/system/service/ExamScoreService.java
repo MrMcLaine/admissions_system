@@ -30,4 +30,8 @@ public class ExamScoreService {
         }
         examScoreRepository.saveAll(resultList);
     }
+
+    public List<ExamScore> findAllByApplicantId(Long applicantId){
+       return examScoreRepository.findAllByApplicantId(applicantId);
+    }
 }

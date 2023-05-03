@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fill your exam scores</title>
+    <title>Welcome</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -51,31 +51,18 @@
 
             </c:if>
 
-            <div>
-                <h2>Profile Information</h2>
-                <p>Id: ${applicant.id}</p>
-                <p>First name: ${applicant.firstName}</p>
-                <p>Last name: ${applicant.lastName}</p>
-                <p>Email: ${applicant.email}</p>
-            </div>
+            <c:if test="${examScoresIsValid != false}">
+                <form:form method="POST" action="/sendApplication" modelAttribute="applicationDto">
+                    <h3>Please select the faculty to which you would like to apply</h3>
+                    <form:select path="facultyName">
+                        <form:options items="${faculties}" />
+                    </form:select>
+                    <button type="submit">Submit</button>
+                </form:form>
+            </c:if>
         </div>
 
-        <form:form method="POST" action="${contextPath}/submitExamScores" modelAttribute="applicantDto">
-            <table>
-                <tr>
-                    <th>Subject</th>
-                    <th>Score</th>
-                </tr>
-                <c:forEach var="examScore" items="${applicantDto.scores}" varStatus="loop">
-                    <tr>
-                        <td>${examScore.name}</td>
-                        <td><form:hidden path="scores[${loop.index}].name" value="${examScore.name}" /></td>
-                        <td><form:input path="scores[${loop.index}].score" type="number" max="100" min="0"/></td>
-                    </tr>
-                </c:forEach>
-            </table>
-            <button type="submit">Submit</button>
-        </form:form>
+
 
     </div>
 
