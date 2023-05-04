@@ -20,8 +20,10 @@ public class ApplicantDto {
     private FacultyName facultyName;
     private boolean enabled;
 
-    public ApplicantDto(Long id, List<ExamScore> scores) {
+    public ApplicantDto(Long id, String firstName, String lastName, List<ExamScore> scores) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.scores = scores;
     }
 

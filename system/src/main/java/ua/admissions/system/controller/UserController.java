@@ -74,7 +74,8 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
 
-        ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), examScores);
+        ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), applicant.getFirstName(),
+                applicant.getLastName(), examScores);
 
         model.addAttribute("applicantDto", applicantDto);
 

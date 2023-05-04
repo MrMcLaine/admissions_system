@@ -54,10 +54,11 @@
 
             <div>
                 <h2>Profile Information</h2>
-                <p>Id: ${applicant.id}</p>
-                <p>First name: ${applicant.firstName}</p>
-                <p>Last name: ${applicant.lastName}</p>
-                <p>Email: ${applicant.email}</p>
+                <p>Id: ${applicantDto.id}</p>
+                <p>First name: ${applicantDto.firstName}</p>
+                <p>Last name: ${applicantDto.lastName}</p>
+                <p>Is enrolled: ${applicantDto.enabled}</p>
+
             </div>
         </div>
 
@@ -83,6 +84,5 @@
 </div>
 <!-- /container -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
