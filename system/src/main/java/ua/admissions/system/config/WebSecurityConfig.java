@@ -57,7 +57,7 @@ public class WebSecurityConfig {
                 .antMatchers("/home").access("hasAuthority('APPLICANT') or hasAuthority('ADMIN')")
                 .antMatchers("/cabinet").access("hasAuthority('APPLICANT')")
                 .antMatchers("/faculty").access("hasAuthority('APPLICANT') or hasAuthority('ADMIN')")
-                .antMatchers("/check-application").access("hasAuthority('ADMIN')")
+                .antMatchers("/adminPage").access("hasAuthority('ADMIN')")
                 .anyRequest().permitAll().and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home").usernameParameter("email").passwordParameter("password").and()

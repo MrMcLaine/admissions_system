@@ -1,7 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
     <div style="margin-left: 10%">
 
         <div class="w3-container w3-teal">
-            <h1>Faculty students</h1>
+            <h1>Admin page</h1>
         </div>
 
         <div class="w3-container">
@@ -54,6 +54,15 @@
                 </h2>
 
             </c:if>
+
+            <form:form method="POST" action="/selectedFaculty" modelAttribute="adminDto">
+                <h3>Select the faculty for checking Applications for admission</h3>
+                <form:select path="selectedFacultyName">
+                    <form:options items="${faculties}"/>
+                </form:select>
+                <button type="submit">Submit</button>
+            </form:form>
+
         </div>
 
     </div>
