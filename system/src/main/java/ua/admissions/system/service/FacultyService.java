@@ -19,6 +19,11 @@ public class FacultyService {
         return facultyRepository.findByName(name);
     }
 
+    public Faculty findByStringName(String name) {
+        return facultyRepository.findByName(findFacultyName(name));
+    }
+
+
     public Faculty findByNameForApplication(String name) {
         FacultyName facultyName = findFacultyName(name);
         if(findByName(facultyName) == null) {

@@ -55,13 +55,46 @@
 
             </c:if>
 
-            <form:form method="POST" action="/selectedFaculty" modelAttribute="adminDto">
-                <h3>Select the faculty for checking Applications for admission</h3>
-                <form:select path="selectedFacultyName">
-                    <form:options items="${faculties}"/>
-                </form:select>
-                <button type="submit">Submit</button>
-            </form:form>
+            <c:if test="${faculties != null}">
+                <form:form method="POST" action="/selectFaculty" modelAttribute="adminDto">
+                    <h3>Select the faculty for checking Applications for admission</h3>
+                    <form:select path="selectedFacultyName">
+                        <form:options items="${faculties}"/>
+                    </form:select>
+                    <button type="submit">Submit</button>
+                </form:form>
+            </c:if>
+
+            <c:if test="${applicants != null}">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthday</th>
+                        <th>Email</th>
+                        <th>Photo</th>
+                        <th>Scores</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="applicant" items="${applicants}">
+                        <tr>
+                            <td>${applicant.id}</td>
+                            <td>${applicant.firstName}</td>
+                            <td>${applicant.lastName}</td>
+                            <td>${applicant.birthday}</td>
+                            <td>${applicant.email}</td>
+                            <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image" style="width: 10%"></td>
+                            <td>${applicant.scores}</td>
+                            <td><a href="disabled?id= ${applicant.id}">Disabled</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
 
         </div>
 

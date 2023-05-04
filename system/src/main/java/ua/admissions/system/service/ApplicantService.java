@@ -26,6 +26,10 @@ public class ApplicantService {
         return repository.findByEmail(email).orElse(null);
     }
 
+    public Applicant findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
     public List<Applicant> findAllByFaculty(Faculty faculty) {
         return repository.findAllByFaculty(faculty);
     }
