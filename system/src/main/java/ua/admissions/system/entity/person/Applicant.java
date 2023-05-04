@@ -18,6 +18,10 @@ import java.util.List;
 @Table(name = "applicant")
 @DiscriminatorValue("APPLICANT")
 public class Applicant extends User {
+    @Lob
+    private byte[] image;
+    @Lob
+    private String encodedImage;
     /*@ExamScoreListValidation*/
     @OneToMany
     @ToString.Exclude

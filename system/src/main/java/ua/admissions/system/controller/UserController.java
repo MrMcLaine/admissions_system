@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ua.admissions.system.dto.ApplicantDto;
 import ua.admissions.system.entity.ExamScore;
@@ -17,7 +19,9 @@ import ua.admissions.system.entity.person.Applicant;
 import ua.admissions.system.entity.person.User;
 import ua.admissions.system.service.ApplicantService;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,7 +79,7 @@ public class UserController {
         Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
 
         ApplicantDto applicantDto = new ApplicantDto(applicant.getId(), applicant.getFirstName(),
-                applicant.getLastName(), examScores);
+                applicant.getLastName(), examScores, applicant.getEncodedImage());
 
         model.addAttribute("applicantDto", applicantDto);
 
@@ -95,4 +99,17 @@ public class UserController {
         return new ModelAndView("applicantsOnFaculty", "model", model);
     }
 
+    @RequestMapping(value = "/addImage", method = RequestMethod.POST)
+    public ModelAndView addImage(@RequestParam MultipartFile image) throws IOException {
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Applicant applicant = applicantService.findByEmail(userDetails.getUsername());
+
+        applicant.setImage(image.getBytes());
+        applicant.setEncodedImage(Base64.getEncoder().encodeToString(image.getBytes()));
+
+        applicantService.save(applicant);
+
+        return new ModelAndView("redirect:/examScores");
+    }
 }

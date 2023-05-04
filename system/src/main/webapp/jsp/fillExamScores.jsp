@@ -58,8 +58,30 @@
                 <p>First name: ${applicantDto.firstName}</p>
                 <p>Last name: ${applicantDto.lastName}</p>
                 <p>Is enrolled: ${applicantDto.enabled}</p>
-
+                <c:if test="${applicantDto.encodedImage != null}">
+                    <td><img src="data:image/jpg;base64,${applicantDto.encodedImage}" alt="image"
+                             style="width: 10%"></td>
+                </c:if>
             </div>
+
+            <c:if test="${applicantDto.encodedImage == null}">
+                <form:form method="POST" action="${contextPath}/addImage"
+                           enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>Select your photo for cabinet to upload</td>
+                            <td><input type="file" name="image"/></td>
+                        </tr>
+
+                        <tr>
+                            <td><input type="submit" value="Upload"/></td>
+                        </tr>
+                    </table>
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                </form:form>
+            </c:if>
+
         </div>
 
         <form:form method="POST" action="${contextPath}/submitExamScores" modelAttribute="applicantDto">
@@ -71,7 +93,7 @@
                 <c:forEach var="examScore" items="${applicantDto.scores}" varStatus="loop">
                     <tr>
                         <td>${examScore.name}</td>
-                        <td><form:hidden path="scores[${loop.index}].name" value="${examScore.name}" /></td>
+                        <td><form:hidden path="scores[${loop.index}].name" value="${examScore.name}"/></td>
                         <td><form:input path="scores[${loop.index}].score" type="number" max="100" min="0"/></td>
                     </tr>
                 </c:forEach>
