@@ -7,6 +7,7 @@ import ua.admissions.system.entity.Faculty;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -47,6 +48,13 @@ public class Applicant extends User {
         this.scores = scores;
         this.faculty = faculty;
         this.enabled = enabled;
+    }
+
+    public List<ExamScore> getExamScores() {
+        if (scores == null) {
+            scores = new ArrayList<>();
+        }
+        return scores;
     }
 
     @Override

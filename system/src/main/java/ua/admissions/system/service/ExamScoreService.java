@@ -34,4 +34,8 @@ public class ExamScoreService {
     public List<ExamScore> findAllByApplicantId(Long applicantId){
        return examScoreRepository.findAllByApplicantId(applicantId);
     }
+
+    public List<ExamScore> findAll() {
+        return examScoreRepository.findAll();
+    }
 }

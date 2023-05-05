@@ -88,7 +88,12 @@
                             <td>${applicant.birthday}</td>
                             <td>${applicant.email}</td>
                             <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image" style="width: 10%"></td>
-                            <td>${applicant.scores}</td>
+                            <td>
+                                <c:forEach var="score" items="${applicant.examScores}">
+                                    <div>${score.name} - ${score.score}</div>
+                                    <br>
+                                </c:forEach>
+                            </td>
                             <td><a href="disabled?id= ${applicant.id}">Disabled</a></td>
                         </tr>
                     </c:forEach>

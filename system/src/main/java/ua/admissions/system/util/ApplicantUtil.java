@@ -31,4 +31,13 @@ public class ApplicantUtil {
         }
         return applicantDtos;
     }
+
+    public static List<Applicant> addedScores(List<Applicant> applicants, List<ExamScore> scores) {
+        for(Applicant applicant : applicants) {
+            Long applicantId = applicant.getId();
+            applicant.setScores(scores.stream()
+                            .filter(examScore -> examScore.getApplicant().getId().equals(applicantId)).toList());
+        }
+        return applicants;
+    }
 }

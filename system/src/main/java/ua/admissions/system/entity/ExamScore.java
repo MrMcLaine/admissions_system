@@ -21,7 +21,7 @@ public class ExamScore extends AbstractBaseEntity {
     private SubjectName name;
     @Column
     private Double score;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "applicant_id", nullable = false)
     @ToString.Exclude
     private Applicant applicant;
