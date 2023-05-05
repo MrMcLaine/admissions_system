@@ -9,6 +9,8 @@ import ua.admissions.system.repository.ApplicantRepository;
 
 import java.util.List;
 
+import static ua.admissions.system.util.AdminUtil.changeEnabledForList;
+
 @Service
 public class ApplicantService {
     @Autowired
@@ -26,11 +28,12 @@ public class ApplicantService {
         return repository.findByEmail(email).orElse(null);
     }
 
-    public Applicant findById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
     public List<Applicant> findAllByFaculty(Faculty faculty) {
         return repository.findAllByFaculty(faculty);
+    }
+
+    public void changeEnabledForEnrolled(List<Applicant> applicants, Faculty faculty){
+        List<Applicant> allByFaculty = repository.findAllByFaculty(faculty);
+        repository.saveAll(changeEnabledForList(allByFaculty, applicants));
     }
 }

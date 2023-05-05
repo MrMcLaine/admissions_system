@@ -55,7 +55,7 @@
 
             </c:if>
 
-            <c:if test="${faculties != null}">
+            <c:if test="${faculties != null && adminDtoCurrentFaculty.applicants == null && enrolledApplicants == null}">
                 <form:form method="POST" action="/selectFaculty" modelAttribute="adminDto">
                     <h3>Select the faculty for checking Applications for admission</h3>
                     <form:select path="selectedFacultyName">
@@ -65,40 +65,80 @@
                 </form:form>
             </c:if>
 
-            <c:if test="${applicants != null}">
+            <c:if test="${adminDtoCurrentFaculty.applicants != null}">
+
+                <form:form method="POST" action="/enroll" modelAttribute="adminDtoCurrentFaculty">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birthday</th>
+                            <th>Email</th>
+                            <th>Photo</th>
+                            <th>Scores</th>
+                            <th>Enabled</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="applicant" items="${adminDtoCurrentFaculty.applicants}" varStatus="status">
+                            <tr>
+                                <td>${applicant.id}</td>
+                                <td><input type="hidden" name="applicantForAdmins[${status.index}].id" value="${applicant.id}" /></td>
+                                <td>${applicant.firstName}</td>
+                                <td>${applicant.lastName}</td>
+                                <td>${applicant.birthday}</td>
+                                <td>${applicant.email}</td>
+                                <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image"
+                                         style="width: 10%"></td>
+                                <td>
+                                    <c:forEach var="score" items="${applicant.examScores}">
+                                        <div>${score.name} - ${score.score}</div>
+                                        <br>
+                                    </c:forEach>
+                                </td>
+                                <td>${applicant.enabled}</td>
+                                <td><input type="hidden" name="applicantForAdmins[${status.index}].enabled"
+                                           value="${applicant.enabled}" /></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <form:hidden path="selectedFacultyName" value="${adminDtoCurrentFaculty.selectedFacultyName}" />
+                    <input type="submit" value="Enroll">
+                </form:form>
+            </c:if>
+
+            <c:if test="${enrolledApplicants != null}">
 
                 <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Birthday</th>
-                        <th>Email</th>
-                        <th>Photo</th>
-                        <th>Scores</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="applicant" items="${applicants}">
+                        <thead>
                         <tr>
-                            <td>${applicant.id}</td>
-                            <td>${applicant.firstName}</td>
-                            <td>${applicant.lastName}</td>
-                            <td>${applicant.birthday}</td>
-                            <td>${applicant.email}</td>
-                            <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image" style="width: 10%"></td>
-                            <td>
-                                <c:forEach var="score" items="${applicant.examScores}">
-                                    <div>${score.name} - ${score.score}</div>
-                                    <br>
-                                </c:forEach>
-                            </td>
-                            <td><a href="disabled?id= ${applicant.id}">Disabled</a></td>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birthday</th>
+                            <th>Email</th>
+                            <th>Photo</th>
+                            <th>Enabled</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="applicant" items="${enrolledApplicants}">
+                            <tr>
+                                <td>${applicant.id}</td>
+                                <td>${applicant.firstName}</td>
+                                <td>${applicant.lastName}</td>
+                                <td>${applicant.birthday}</td>
+                                <td>${applicant.email}</td>
+                                <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image"
+                                         style="width: 10%"></td>
+                                <td>${applicant.enabled}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
             </c:if>
 
         </div>
