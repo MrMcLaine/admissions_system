@@ -27,9 +27,6 @@
     <div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
         <h3 class="w3-bar-item">Menu</h3>
         <a href="/home" class="w3-bar-item w3-button">Home</a>
-        <a href="/examScores" class="w3-bar-item w3-button">Fill in exam scores</a>
-        <a href="/apply-admission" class="w3-bar-item w3-button">Apply for admission to the faculty</a>
-        <a href="/applicantsByFaculty" class="w3-bar-item w3-button">View all applicants by selected faculty</a>
         <sec:authorize access="hasAuthority('ADMIN')">
             <a href="/adminPage" class="w3-bar-item w3-button">Admin cabinet</a>
         </sec:authorize>
@@ -85,7 +82,8 @@
                         <c:forEach var="applicant" items="${adminDtoCurrentFaculty.applicants}" varStatus="status">
                             <tr>
                                 <td>${applicant.id}</td>
-                                <td><input type="hidden" name="applicantForAdmins[${status.index}].id" value="${applicant.id}" /></td>
+                                <td><input type="hidden" name="applicantForAdmins[${status.index}].id"
+                                           value="${applicant.id}"/></td>
                                 <td>${applicant.firstName}</td>
                                 <td>${applicant.lastName}</td>
                                 <td>${applicant.birthday}</td>
@@ -100,12 +98,12 @@
                                 </td>
                                 <td>${applicant.enabled}</td>
                                 <td><input type="hidden" name="applicantForAdmins[${status.index}].enabled"
-                                           value="${applicant.enabled}" /></td>
+                                           value="${applicant.enabled}"/></td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <form:hidden path="selectedFacultyName" value="${adminDtoCurrentFaculty.selectedFacultyName}" />
+                    <form:hidden path="selectedFacultyName" value="${adminDtoCurrentFaculty.selectedFacultyName}"/>
                     <input type="submit" value="Enroll">
                 </form:form>
             </c:if>
@@ -113,32 +111,32 @@
             <c:if test="${enrolledApplicants != null}">
 
                 <table class="table table-striped">
-                        <thead>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birthday</th>
+                        <th>Email</th>
+                        <th>Photo</th>
+                        <th>Enabled</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="applicant" items="${enrolledApplicants}">
                         <tr>
-                            <th>Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Birthday</th>
-                            <th>Email</th>
-                            <th>Photo</th>
-                            <th>Enabled</th>
+                            <td>${applicant.id}</td>
+                            <td>${applicant.firstName}</td>
+                            <td>${applicant.lastName}</td>
+                            <td>${applicant.birthday}</td>
+                            <td>${applicant.email}</td>
+                            <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image"
+                                     style="width: 10%"></td>
+                            <td>${applicant.enabled}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="applicant" items="${enrolledApplicants}">
-                            <tr>
-                                <td>${applicant.id}</td>
-                                <td>${applicant.firstName}</td>
-                                <td>${applicant.lastName}</td>
-                                <td>${applicant.birthday}</td>
-                                <td>${applicant.email}</td>
-                                <td><img src="data:image/jpg;base64,${applicant.encodedImage}" alt="image"
-                                         style="width: 10%"></td>
-                                <td>${applicant.enabled}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </c:if>
 
         </div>
