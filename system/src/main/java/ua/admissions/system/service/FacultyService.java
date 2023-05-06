@@ -1,5 +1,7 @@
 package ua.admissions.system.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.admissions.system.entity.Faculty;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Service
 public class FacultyService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(FacultyService.class);
 
     @Autowired
     FacultyRepository facultyRepository;
@@ -25,6 +29,7 @@ public class FacultyService {
 
 
     public Faculty findByNameForApplication(String name) {
+        LOGGER.info("Find by faculty name {}", name);
         FacultyName facultyName = findFacultyName(name);
         if(findByName(facultyName) == null) {
             Faculty faculty = new Faculty(findFacultyName(name), 10, new ArrayList<>());
