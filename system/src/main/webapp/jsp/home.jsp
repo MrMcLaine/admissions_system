@@ -23,21 +23,9 @@
 <body>
 <div class="container">
 
-    <!-- Sidebar -->
-    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
-        <h3 class="w3-bar-item">Menu</h3>
-        <a href="/home" class="w3-bar-item w3-button">Home</a>
-        <sec:authorize access="hasAuthority('APPLICANT')">
-            <a href="/examScores" class="w3-bar-item w3-button">Fill in exam scores</a>
-            <a href="/apply-admission" class="w3-bar-item w3-button">Apply for admission to the faculty</a>
-            <a href="/applicantsByFaculty" class="w3-bar-item w3-button">View all applicants by selected faculty</a>
-        </sec:authorize>
-        <sec:authorize access="hasAuthority('ADMIN')">
-            <a href="/adminPage" class="w3-bar-item w3-button">Admin cabinet</a>
-        </sec:authorize>
-    </div>
+       <jsp:include page="sidebar.jsp"></jsp:include>
 
-    <!-- Page Content -->
+       <!-- Page Content -->
     <div style="margin-left: 10%">
 
         <div class="w3-container w3-teal">
@@ -51,9 +39,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
 
-                <h2>Welcome ${pageContext.request.userPrincipal.name} | <a
-                        onclick="document.forms['logoutForm'].submit()">Logout</a>
-                </h2>
+                <h2>Welcome  ${pageContext.request.userPrincipal.name}</h2>
 
             </c:if>
         </div>
