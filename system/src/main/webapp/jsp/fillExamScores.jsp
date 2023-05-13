@@ -17,6 +17,7 @@
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link type="text/css" href="cabinet.css" rel="stylesheet">
 
 </head>
 <body>
@@ -42,7 +43,30 @@
 
             </c:if>
 
-            <div>
+            <div class="container">
+                <section class="mx-auto my-5" style="max-width: 23rem;">
+
+                    <div class="card testimonial-card mt-2 mb-3">
+                        <div class="card-up aqua-gradient"></div>
+                        <div class="avatar mx-auto white">
+<%--                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2831%29.jpg" class="rounded-circle img-fluid"
+                                 alt="woman avatar">--%>
+                            <c:if test="${applicantDto.encodedImage != null}">
+                                <img src="data:image/jpg;base64,${applicantDto.encodedImage}" alt="image" class="rounded-circle img-fluid">
+                            </c:if>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 class="card-title font-weight-bold">${applicantDto.firstName} ${applicantDto.lastName}</h4>
+                            <hr>
+                            <p><i class="fas fa-quote-left"></i> ID: ${applicantDto.id}</p>
+                            <p><i class="fas fa-quote-left"></i> Is enrolled: ${applicantDto.enabled} </p>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+<%--            <div>
                 <h2>Profile Information</h2>
                 <p>Id: ${applicantDto.id}</p>
                 <p>First name: ${applicantDto.firstName}</p>
@@ -52,7 +76,7 @@
                     <td><img src="data:image/jpg;base64,${applicantDto.encodedImage}" alt="image"
                              style="width: 10%"></td>
                 </c:if>
-            </div>
+            </div>--%>
 
             <c:if test="${applicantDto.encodedImage == null}">
                 <form:form method="POST" action="${contextPath}/addImage"

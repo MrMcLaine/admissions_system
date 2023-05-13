@@ -45,6 +45,8 @@
         </div>
 
     </div>
+    
+    <img src="../resources/images/university-louisiana-lafayette-best-louisiana.jpg" style="background-size: contain">
 
 </div>
 <!-- /container -->
