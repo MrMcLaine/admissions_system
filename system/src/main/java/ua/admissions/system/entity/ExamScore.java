@@ -38,7 +38,6 @@ public class ExamScore extends AbstractBaseEntity {
     public SubjectName getName() {
         return name;
     }
-    
 
     @Override
     public boolean equals(Object o) {

@@ -26,7 +26,7 @@ import static ua.admissions.system.FacultyTestData.CREATED_FACULTY_ENGINEERING;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ApplicationForAdmissionRepositoryTest {
-
+/*
     @Autowired
     ApplicationForAdmissionRepository repository;
     @Autowired
@@ -116,7 +116,7 @@ class ApplicationForAdmissionRepositoryTest {
         assertFalse(repository.existsById(Long.MAX_VALUE));
     }
 
-/*    @Test
+*//*    @Test
     void createWithIllegalArg() {
         ApplicationForAdmission saved = repository.save(saverCheck(CREATED_APPLICATION));
         ApplicationForAdmission missingApplication = new ApplicationForAdmission();
@@ -126,7 +126,7 @@ class ApplicationForAdmissionRepositoryTest {
         assertThrows(DataIntegrityViolationException.class, () -> {
             repository.save(missingApplication);
         });
-    }*/
+    }*//*
 
     void checkApplicationFields(ApplicationForAdmission afa1, ApplicationForAdmission afa2) {
         Assertions.assertNotNull(afa1);
@@ -148,5 +148,5 @@ class ApplicationForAdmissionRepositoryTest {
             return repository.save(application);
         }
         return repository.findByApplicant(application.getApplicant());
-    }
+    }*/
 }

@@ -21,11 +21,11 @@ public class ApplicantService {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
-    public void save(Applicant applicant) {
+    public Applicant save(Applicant applicant) {
         LOGGER.info("Save applicant {} : ", applicant);
         applicant.setPassword(bCryptPasswordEncoder.encode(applicant.getPassword()));
         applicant.setPassword(bCryptPasswordEncoder.encode(applicant.getPasswordConfirm()));
-        repository.save(applicant);
+        return repository.save(applicant);
     }
 
     public Applicant findByEmail(String email) {

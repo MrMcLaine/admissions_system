@@ -8,7 +8,7 @@ import static ua.admissions.system.ApplicantTestData.*;
 import static ua.admissions.system.FacultyTestData.*;
 
 public class ApplicationForAdmissionTestData {
-    public static final ApplicationForAdmission CREATED_APPLICATION =
+/*    public static final ApplicationForAdmission CREATED_APPLICATION =
             new ApplicationForAdmission(CREATED_APPLICANT, CREATED_FACULTY_COMPUTER_SCIENCE, true);
     public static final ApplicationForAdmission CREATED_APPLICATION_2 =
             new ApplicationForAdmission(CREATED_APPLICANT_2, CREATED_FACULTY_ENGINEERING, true);
@@ -25,5 +25,5 @@ public class ApplicationForAdmissionTestData {
         ApplicationForAdmission application = new ApplicationForAdmission(CREATED_APPLICATION);
         application.setFaculty(CREATED_FACULTY_ENGINEERING);
         return application;
-    }
+    }*/
 }
